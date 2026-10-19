@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ร้านอาหารใน มธ.</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>กินไหนดี มธ.</h1>
+    <p>เช็กสถานะร้านอาหารและเมนูที่มีขาย</p>
+  </header>
+
+  <main class="container">
+    <section class="search-section">
+      <h2>ค้นหาร้านอาหาร</h2>
+      <label for="searchInput">ชื่อร้านหรือเมนูอาหาร</label>
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="ค้นหาร้านอาหาร หรือเมนู..."
+      >
+    </section>
+
+    <section class="restaurant-section">
+      <h2>ร้านอาหารทั้งหมด</h2>
+      <p id="resultMessage">กำลังเตรียมรายการร้านอาหาร...</p>
+      <div id="restaurantList" class="restaurant-list"></div>
+    </section>
+  </main>
+
+  <script src="js/search-filter.js"></script>
+</body>
+</html>
