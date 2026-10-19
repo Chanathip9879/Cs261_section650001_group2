@@ -424,6 +424,25 @@ a {
     background: var(--danger-bg);
 }
 
+.restaurant-status.temporary {
+    color: #a15c00;
+    background: #fff3dc;
+}
+
+.restaurant-status.loading,
+.restaurant-status.unknown {
+    color: var(--text-secondary);
+    background: #efedf5;
+}
+
+.restaurant-status.loading {
+    animation: status-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+    50% { opacity: 0.5; }
+}
+
 .restaurant-info {
     padding: 15px;
 }

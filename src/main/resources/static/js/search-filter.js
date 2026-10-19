@@ -97,6 +97,88 @@ const resetFiltersButton = document.getElementById("resetFilters");
 let selectedCategory = "all";
 let selectedStatus = "all";
 
+/* ========================================
+   3.1 Restaurant Status API (Task3)
+======================================== */
+
+const STATUS_API = "/api/check-status";   // GET /api/check-status/{id}
+
+// สถานะล่าสุดจาก API: { [id]: { state: "open" | "closed" | "temporarily" | "loading" | "unknown" } }
+const statusById = {};
+
+const STATUS_VIEW = {
+    open:        { text: "เปิดอยู่",       cssClass: "open" },
+    closed:      { text: "ปิดแล้ว",        cssClass: "closed" },
+    temporarily: { text: "ปิดชั่วคราว",     cssClass: "temporary" },
+    loading:     { text: "กำลังตรวจสอบ...", cssClass: "loading" },
+    unknown:     { text: "ไม่ทราบสถานะ",   cssClass: "unknown" }
+};
+
+// แปลงสถานะจาก API ("Open" / "Closed" / "TemporarilyClosed") เป็น state ของ UI
+function mapApiStatus(status) {
+    switch (status) {
+        case "Open": return "open";
+        case "Closed": return "closed";
+        case "TemporarilyClosed": return "temporarily";
+        default: return "unknown";
+    }
+}
+
+// สถานะที่ใช้แสดงจริง: ใช้ค่าจาก API ก่อน ถ้ายังไม่มีใช้ค่าในข้อมูลร้าน
+function getStatusState(restaurant) {
+    const fromApi = statusById[restaurant.id];
+    if (fromApi) return fromApi.state;
+    return restaurant.status === "open" || restaurant.status === "closed"
+        ? restaurant.status
+        : "unknown";
+}
+
+async function fetchRestaurantStatus(id) {
+    const response = await fetch(`${STATUS_API}/${encodeURIComponent(id)}`, {
+        headers: { "Accept": "application/json" },
+        cache: "no-store"
+    });
+
+    if (response.status === 404) return "unknown";   // ไม่มีร้านนี้ในระบบสถานะ
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    return mapApiStatus(data.status);
+}
+
+// ดึงสถานะของร้านทั้งหมด (เรียกตอนโหลดหน้า / รีเฟรช)
+async function loadStatuses() {
+    restaurants.forEach((restaurant) => {
+        if (!statusById[restaurant.id]) {
+            statusById[restaurant.id] = { state: "loading" };
+        }
+    });
+    refreshStatusBadges();
+
+    await Promise.all(restaurants.map(async (restaurant) => {
+        try {
+            statusById[restaurant.id] = { state: await fetchRestaurantStatus(restaurant.id) };
+        } catch (error) {
+            // API ล่ม: ถ้าเคยมีค่าเดิมให้คงไว้ ไม่งั้นแสดงว่าไม่ทราบสถานะ
+            if (!statusById[restaurant.id] || statusById[restaurant.id].state === "loading") {
+                statusById[restaurant.id] = { state: "unknown" };
+            }
+        }
+    }));
+
+    // สถานะเปลี่ยนแล้ว ต้องกรองใหม่ (กรณีเลือกตัวกรองเปิด/ปิดอยู่)
+    updateResults();
+}
+
+function refreshStatusBadges() {
+    document.querySelectorAll("[data-status-id]").forEach((badge) => {
+        const state = statusById[badge.dataset.statusId]?.state ?? "unknown";
+        const view = STATUS_VIEW[state] ?? STATUS_VIEW.unknown;
+        badge.className = `restaurant-status ${view.cssClass}`;
+        badge.textContent = view.text;
+    });
+}
+
 
 /* ========================================
    4. Search and Filter Restaurants
