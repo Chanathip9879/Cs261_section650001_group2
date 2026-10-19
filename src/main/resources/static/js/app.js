@@ -51,6 +51,153 @@ function getRestaurant(id) {
     return restaurants.find((item) => item.id === Number(id)) || restaurants[0];
 }
 
+
+/* ===== ตรวจสอบสถานะร้านจาก Backend ===== */
+
+const STATUS_API_URL = "/api/check-status";
+
+async function fetchRestaurantStatus(restaurantId) {
+    const response = await fetch(
+        `${STATUS_API_URL}/${restaurantId}`
+    );
+
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+    }
+
+    return await response.json();
+}
+
+
+
+async function displayRestaurantStatus(restaurantId) {
+    const badge = document.getElementById("detailStatus");
+
+    badge.textContent = "กำลังตรวจสอบ...";
+    badge.className = "badge loading";
+
+    const data = await fetchRestaurantStatus(restaurantId);
+
+    // ถ้า API ใช้งานไม่ได้ ให้แจ้งว่าไม่สามารถตรวจสอบได้
+    if (!data) {
+        badge.textContent = "ตรวจสอบสถานะไม่ได้";
+        badge.className = "badge unknown";
+        return;
+    }
+
+    const statusMap = {
+        Open: {
+            text: "เปิดอยู่",
+            className: "open"
+        },
+        Closed: {
+            text: "ปิดแล้ว",
+            className: "closed"
+        },
+        TemporarilyClosed: {
+            text: "ปิดชั่วคราว",
+            className: "temporary"
+        }
+    };
+
+    const status = statusMap[data.status];
+
+    if (!status) {
+        badge.textContent = "ไม่ทราบสถานะ";
+        badge.className = "badge unknown";
+        console.warn("สถานะที่ API ส่งกลับ:", data);
+        return;
+    }
+
+    // ป้องกันการอัปเดตร้านผิดร้าน หากผู้ใช้เปลี่ยนหน้าระหว่างโหลด
+    if (
+        currentScreen !== "detail" ||
+        Number(currentRestaurantId) !== Number(restaurantId)
+    ) {
+        return;
+    }
+
+    badge.textContent = status.text;
+    badge.className = `badge ${status.className}`;
+}
+
+
+
+async function syncRestaurantStatus(restaurantId) {
+    const data = await fetchRestaurantStatus(restaurantId);
+
+    // หาก API ใช้งานไม่ได้ ให้คงข้อมูลเดิมของหน้าเว็บไว้
+    if (!data) return;
+
+    const restaurant = restaurants.find(
+        (item) => Number(item.id) === Number(restaurantId)
+    );
+
+    // ไม่พบร้าน ID ตรงกันในข้อมูล Frontend
+    if (!restaurant) {
+        console.warn(
+            "ไม่พบร้านใน Frontend ที่มี ID:",
+            restaurantId
+        );
+        return;
+    }
+
+    // แปลงสถานะจาก Backend เป็นสถานะที่ Frontend ใช้
+    const statusMap = {
+        Open: {
+            state: "open",
+            text: "เปิดอยู่",
+            cssClass: "open"
+        },
+        Closed: {
+            state: "closed",
+            text: "ปิดแล้ว",
+            cssClass: "closed"
+        },
+        TemporarilyClosed: {
+            state: "temporary",
+            text: "ปิดชั่วคราว",
+            cssClass: "temporary"
+        }
+    };
+
+    const status = statusMap[data.status];
+
+    if (!status) {
+        console.warn("สถานะจาก API ไม่รู้จัก:", data.status);
+        return;
+    }
+
+    // อัปเดตข้อมูลในหน่วยความจำของ Frontend
+    restaurant.status = status.state;
+
+    // อัปเดตสถานะในหน้ารายละเอียดร้าน
+    if (Number(currentRestaurantId) === Number(restaurantId)) {
+        const badge = document.getElementById("detailStatus");
+
+        if (badge) {
+            badge.textContent = status.text;
+            badge.className = `badge ${status.cssClass}`;
+            badge.dataset.statusId = String(restaurantId);
+        }
+    }
+
+    // อัปเดตปุ่มในหน้าจัดการร้าน หากกำลังเปิดร้านนี้อยู่
+    if (
+        currentScreen === "owner" &&
+        Number(currentRestaurantId) === Number(restaurantId)
+    ) {
+        document.getElementById("btnOpen")
+            .classList.toggle("is-on", status.state === "open");
+
+        document.getElementById("btnClose")
+            .classList.toggle("is-on", status.state !== "open");
+    }
+
+    console.log("อัปเดตสถานะร้านสำเร็จ:", data);
+}
+
+
 function menuRows(restaurant) {
     return restaurant.menu.map((item) => `
         <article class="menu-row">
@@ -82,6 +229,7 @@ window.openRestaurant = function openRestaurant(id) {
     const restaurant = getRestaurant(id);
     renderDetail(restaurant);
     showScreen("detail");
+    displayRestaurantStatus(restaurant.id);
 };
 
 function renderMenuGrid(restaurant) {
@@ -125,6 +273,7 @@ function renderOwner() {
     document.getElementById("btnOpen").classList.toggle("is-on", state === "open");
     document.getElementById("btnClose").classList.toggle("is-on", state !== "open");
     document.getElementById("ownerMenu").innerHTML = menuRows(restaurant);
+    syncRestaurantStatus(restaurant.id);
 }
 
 document.querySelectorAll("[data-go]").forEach((el) => {
