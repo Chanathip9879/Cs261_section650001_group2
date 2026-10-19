@@ -1,9 +1,3 @@
-
-/* ========================================
-   1. Sample Restaurant Data
-   ข้อมูลตัวอย่างสำหรับพัฒนา UI
-======================================== */
-
 const restaurants = [
     {
         id: 1,
@@ -13,8 +7,14 @@ const restaurants = [
         hours: "08:00 - 16:00",
         status: "open",
         description: "อาหารตามสั่ง ทำสดใหม่ทุกจาน",
-        menu: ["ข้าวกะเพราหมูสับ", "ข้าวผัด", "ข้าวไข่เจียว"],
-        emoji: "🍳"
+        lat: 14.0734,
+        lng: 100.6059,
+        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
+        menu: [
+            { name: "ข้าวกะเพราหมูสับ", price: 45, image: "https://images.unsplash.com/photo-1562565652-a0d8f0c59eb4?auto=format&fit=crop&w=400&q=80" },
+            { name: "ข้าวผัด", price: 40, image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=400&q=80" },
+            { name: "ข้าวไข่เจียว", price: 35, image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400&q=80" }
+        ]
     },
     {
         id: 2,
@@ -24,8 +24,14 @@ const restaurants = [
         hours: "09:00 - 17:00",
         status: "open",
         description: "ก๋วยเตี๋ยวเรือรสเข้มข้น",
-        menu: ["ก๋วยเตี๋ยวเรือ", "ก๋วยเตี๋ยวหมู", "ลูกชิ้น"],
-        emoji: "🍜"
+        lat: 14.0728,
+        lng: 100.6072,
+        image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",
+        menu: [
+            { name: "ก๋วยเตี๋ยวเรือ", price: 45, image: "https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=400&q=80" },
+            { name: "ก๋วยเตี๋ยวหมู", price: 50, image: "https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=400&q=80" },
+            { name: "ลูกชิ้นลวก", price: 30, image: "https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=400&q=80" }
+        ]
     },
     {
         id: 3,
@@ -35,8 +41,13 @@ const restaurants = [
         hours: "07:00 - 14:00",
         status: "closed",
         description: "ข้าวมันไก่พร้อมน้ำจิ้มสูตรพิเศษ",
-        menu: ["ข้าวมันไก่ต้ม", "ข้าวมันไก่ทอด"],
-        emoji: "🍗"
+        lat: 14.0719,
+        lng: 100.6048,
+        image: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=600&q=80",
+        menu: [
+            { name: "ข้าวมันไก่ต้ม", price: 50, image: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=400&q=80" },
+            { name: "ข้าวมันไก่ทอด", price: 55, image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80" }
+        ]
     },
     {
         id: 4,
@@ -46,8 +57,13 @@ const restaurants = [
         hours: "09:00 - 18:00",
         status: "open",
         description: "เครื่องดื่มและชาไข่มุกหลากหลายรสชาติ",
-        menu: ["ชาไทย", "ชาเขียว", "โกโก้", "ชานมไข่มุก"],
-        emoji: "🧋"
+        lat: 14.0741,
+        lng: 100.6039,
+        image: "https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&w=600&q=80",
+        menu: [
+            { name: "ชาไทย", price: 35, image: "https://images.unsplash.com/photo-1571934811355-1c97c7c3d4b8?auto=format&fit=crop&w=400&q=80" },
+            { name: "ชานมไข่มุก", price: 45, image: "https://images.unsplash.com/photo-1558857563-b371033873b8?auto=format&fit=crop&w=400&q=80" }
+        ]
     },
     {
         id: 5,
@@ -57,8 +73,13 @@ const restaurants = [
         hours: "10:00 - 16:00",
         status: "closed",
         description: "ขนมหวานสำหรับเติมความสดชื่น",
-        menu: ["บัวลอย", "ลอดช่อง", "น้ำแข็งไส"],
-        emoji: "🍰"
+        lat: 14.0730,
+        lng: 100.6081,
+        image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80",
+        menu: [
+            { name: "บัวลอย", price: 30, image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=400&q=80" },
+            { name: "น้ำแข็งไส", price: 35, image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=400&q=80" }
+        ]
     },
     {
         id: 6,
@@ -68,53 +89,41 @@ const restaurants = [
         hours: "10:00 - 19:00",
         status: "open",
         description: "อาหารอีสาน รสจัดจ้าน",
-        menu: ["ส้มตำไทย", "ส้มตำปูปลาร้า", "ไก่ย่าง"],
-        emoji: "🥗"
+        lat: 14.0722,
+        lng: 100.6065,
+        image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80",
+        menu: [
+            { name: "ส้มตำไทย", price: 40, image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=400&q=80" },
+            { name: "ไก่ย่าง", price: 80, image: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=400&q=80" }
+        ]
     }
 ];
 
-
-/* ========================================
-   2. Get HTML Elements
-======================================== */
-
 const searchInput = document.getElementById("searchInput");
 const clearSearchButton = document.getElementById("clearSearch");
-
 const categoryFilters = document.getElementById("categoryFilters");
 const statusFilters = document.getElementById("statusFilters");
-
 const restaurantList = document.getElementById("restaurantList");
 const resultCount = document.getElementById("resultCount");
 const emptyState = document.getElementById("emptyState");
 const resetFiltersButton = document.getElementById("resetFilters");
-
-
-/* ========================================
-   3. Filter State
-======================================== */
+const recommendList = document.getElementById("recommendList");
+const homeSearch = document.getElementById("homeSearch");
 
 let selectedCategory = "all";
 let selectedStatus = "all";
 
-/* ========================================
-   3.1 Restaurant Status API (Task3)
-======================================== */
-
-const STATUS_API = "/api/check-status";   // GET /api/check-status/{id}
-
-// สถานะล่าสุดจาก API: { [id]: { state: "open" | "closed" | "temporarily" | "loading" | "unknown" } }
+const STATUS_API = "/api/check-status";
 const statusById = {};
 
 const STATUS_VIEW = {
-    open:        { text: "เปิดอยู่",       cssClass: "open" },
-    closed:      { text: "ปิดแล้ว",        cssClass: "closed" },
-    temporarily: { text: "ปิดชั่วคราว",     cssClass: "temporary" },
-    loading:     { text: "กำลังตรวจสอบ...", cssClass: "loading" },
-    unknown:     { text: "ไม่ทราบสถานะ",   cssClass: "unknown" }
+    open: { text: "เปิดอยู่", cssClass: "open" },
+    closed: { text: "ปิดแล้ว", cssClass: "closed" },
+    temporarily: { text: "ปิดชั่วคราว", cssClass: "temporary" },
+    loading: { text: "กำลังตรวจสอบ...", cssClass: "loading" },
+    unknown: { text: "ไม่ทราบสถานะ", cssClass: "unknown" }
 };
 
-// แปลงสถานะจาก API ("Open" / "Closed" / "TemporarilyClosed") เป็น state ของ UI
 function mapApiStatus(status) {
     switch (status) {
         case "Open": return "open";
@@ -124,7 +133,6 @@ function mapApiStatus(status) {
     }
 }
 
-// สถานะที่ใช้แสดงจริง: ใช้ค่าจาก API ก่อน ถ้ายังไม่มีใช้ค่าในข้อมูลร้าน
 function getStatusState(restaurant) {
     const fromApi = statusById[restaurant.id];
     if (fromApi) return fromApi.state;
@@ -135,18 +143,15 @@ function getStatusState(restaurant) {
 
 async function fetchRestaurantStatus(id) {
     const response = await fetch(`${STATUS_API}/${encodeURIComponent(id)}`, {
-        headers: { "Accept": "application/json" },
+        headers: { Accept: "application/json" },
         cache: "no-store"
     });
-
-    if (response.status === 404) return "unknown";   // ไม่มีร้านนี้ในระบบสถานะ
+    if (response.status === 404) return "unknown";
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
     const data = await response.json();
     return mapApiStatus(data.status);
 }
 
-// ดึงสถานะของร้านทั้งหมด (เรียกตอนโหลดหน้า / รีเฟรช)
 async function loadStatuses() {
     restaurants.forEach((restaurant) => {
         if (!statusById[restaurant.id]) {
@@ -159,261 +164,153 @@ async function loadStatuses() {
         try {
             statusById[restaurant.id] = { state: await fetchRestaurantStatus(restaurant.id) };
         } catch (error) {
-            // API ล่ม: ถ้าเคยมีค่าเดิมให้คงไว้ ไม่งั้นแสดงว่าไม่ทราบสถานะ
             if (!statusById[restaurant.id] || statusById[restaurant.id].state === "loading") {
                 statusById[restaurant.id] = { state: "unknown" };
             }
         }
     }));
 
-    // สถานะเปลี่ยนแล้ว ต้องกรองใหม่ (กรณีเลือกตัวกรองเปิด/ปิดอยู่)
     updateResults();
+    renderRecommended();
 }
 
 function refreshStatusBadges() {
     document.querySelectorAll("[data-status-id]").forEach((badge) => {
         const state = statusById[badge.dataset.statusId]?.state ?? "unknown";
         const view = STATUS_VIEW[state] ?? STATUS_VIEW.unknown;
-        badge.className = `restaurant-status ${view.cssClass}`;
+        badge.className = `badge ${view.cssClass}`;
         badge.textContent = view.text;
     });
 }
 
-
-/* ========================================
-   4. Search and Filter Restaurants
-======================================== */
-
 function getFilteredRestaurants() {
-    const keyword = searchInput.value.trim().toLowerCase();
+    const keyword = (searchInput?.value || "").trim().toLowerCase();
 
     return restaurants.filter((restaurant) => {
-
-        // ค้นหาชื่อร้าน หมวดหมู่ สถานที่ และเมนู
         const searchableText = [
             restaurant.name,
             restaurant.category,
             restaurant.location,
             restaurant.description,
-            ...restaurant.menu
+            ...restaurant.menu.map((item) => item.name)
         ].join(" ").toLowerCase();
 
-        const matchesSearch =
-            searchableText.includes(keyword);
-
-        // กรองตามหมวดหมู่
+        const matchesSearch = searchableText.includes(keyword);
         const matchesCategory =
-            selectedCategory === "all" ||
-            restaurant.category === selectedCategory;
-
-        // กรองตามสถานะร้าน
+            selectedCategory === "all" || restaurant.category === selectedCategory;
+        const liveStatus = getStatusState(restaurant);
         const matchesStatus =
             selectedStatus === "all" ||
-            restaurant.status === selectedStatus;
+            (selectedStatus === "open" && liveStatus === "open") ||
+            (selectedStatus === "closed" && liveStatus !== "open");
 
         return matchesSearch && matchesCategory && matchesStatus;
     });
 }
 
-
-/* ========================================
-   5. Render Restaurant Cards
-======================================== */
+function restaurantCard(restaurant) {
+    const state = getStatusState(restaurant);
+    const view = STATUS_VIEW[state] ?? STATUS_VIEW.unknown;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "resto-card";
+    button.innerHTML = `
+        <img src="${restaurant.image}" alt="${restaurant.name}">
+        <div>
+            <h3>${restaurant.name}</h3>
+            <span class="badge ${view.cssClass}" data-status-id="${restaurant.id}">${view.text}</span>
+            <p class="muted">${restaurant.location} · ${restaurant.hours} น.</p>
+        </div>
+        <svg class="heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 21s-7-4.6-9.5-8.4C.4 9.4 2.2 5 6.2 5c2.1 0 3.4 1.2 4.3 2.4C11.4 6.2 12.7 5 14.8 5c4 0 5.8 4.4 3.7 7.6C19 16.4 12 21 12 21Z"/>
+        </svg>
+    `;
+    button.addEventListener("click", () => window.openRestaurant?.(restaurant.id));
+    return button;
+}
 
 function renderRestaurants(filteredRestaurants) {
-
     restaurantList.innerHTML = "";
-
     filteredRestaurants.forEach((restaurant) => {
-
-        const card = document.createElement("article");
-        card.className = "restaurant-card";
-
-        const statusText =
-            restaurant.status === "open" ? "เปิดอยู่" : "ปิดแล้ว";
-
-        const statusClass =
-            restaurant.status === "open" ? "open" : "closed";
-
-        // สร้างการ์ดจากข้อมูลร้านอาหาร
-        card.innerHTML = `
-            <div class="restaurant-image">
-                <div class="restaurant-image-placeholder"
-                     role="img"
-                     aria-label="${restaurant.category}">
-                    ${restaurant.emoji}
-                </div>
-
-                <span class="restaurant-status ${statusClass}">
-                    ${statusText}
-                </span>
-            </div>
-
-            <div class="restaurant-info">
-                <h3 class="restaurant-name">
-                    ${restaurant.name}
-                </h3>
-
-                <span class="restaurant-category">
-                    ${restaurant.category}
-                </span>
-
-                <p class="restaurant-location">
-                    📍 ${restaurant.location}
-                </p>
-
-                <p class="restaurant-hours">
-                    🕒 ${restaurant.hours} น.
-                </p>
-
-                <p class="restaurant-description">
-                    ${restaurant.description}
-                </p>
-            </div>
-        `;
-
-        restaurantList.appendChild(card);
+        restaurantList.appendChild(restaurantCard(restaurant));
     });
-
-    // อัปเดตจำนวนผลลัพธ์
-    resultCount.textContent =
-        `พบ ${filteredRestaurants.length} ร้าน`;
-
-    // แสดงข้อความเมื่อไม่พบร้าน
+    resultCount.textContent = `พบ ${filteredRestaurants.length} ร้าน`;
     emptyState.hidden = filteredRestaurants.length !== 0;
 }
 
-
-/* ========================================
-   6. Update Results
-======================================== */
+function renderRecommended() {
+    if (!recommendList) return;
+    recommendList.innerHTML = "";
+    restaurants.slice(0, 4).forEach((restaurant) => {
+        recommendList.appendChild(restaurantCard(restaurant));
+    });
+}
 
 function updateResults() {
-    const filteredRestaurants = getFilteredRestaurants();
-
-    renderRestaurants(filteredRestaurants);
-
-    // แสดงปุ่มล้างคำค้นหาเมื่อมีข้อความ
-    clearSearchButton.classList.toggle(
-        "visible",
-        searchInput.value.length > 0
-    );
+    if (!searchInput || !restaurantList) return;
+    renderRestaurants(getFilteredRestaurants());
+    clearSearchButton.classList.toggle("visible", searchInput.value.length > 0);
 }
 
-
-/* ========================================
-   7. Category Filter Events
-======================================== */
-
-categoryFilters.addEventListener("click", (event) => {
-
-    const button = event.target.closest("[data-category]");
-
-    if (!button) return;
-
-    selectedCategory = button.dataset.category;
-
-    // เปลี่ยนสีปุ่มที่ถูกเลือก
-    categoryFilters
-        .querySelectorAll("[data-category]")
-        .forEach((categoryButton) => {
-            categoryButton.classList.toggle(
-                "active",
-                categoryButton === button
-            );
+if (categoryFilters) {
+    categoryFilters.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-category]");
+        if (!button) return;
+        selectedCategory = button.dataset.category;
+        categoryFilters.querySelectorAll("[data-category]").forEach((categoryButton) => {
+            categoryButton.classList.toggle("active", categoryButton === button);
         });
+        updateResults();
+    });
+}
 
-    updateResults();
-});
-
-
-/* ========================================
-   8. Open / Closed Filter Events
-======================================== */
-
-statusFilters.addEventListener("click", (event) => {
-
-    const button = event.target.closest("[data-status]");
-
-    if (!button) return;
-
-    selectedStatus = button.dataset.status;
-
-    // เปลี่ยนสีปุ่มที่ถูกเลือก
-    statusFilters
-        .querySelectorAll("[data-status]")
-        .forEach((statusButton) => {
-            statusButton.classList.toggle(
-                "active",
-                statusButton === button
-            );
+if (statusFilters) {
+    statusFilters.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-status]");
+        if (!button) return;
+        selectedStatus = button.dataset.status;
+        statusFilters.querySelectorAll("[data-status]").forEach((statusButton) => {
+            statusButton.classList.toggle("active", statusButton === button);
         });
+        updateResults();
+    });
+}
 
-    updateResults();
-});
+if (searchInput) searchInput.addEventListener("input", updateResults);
 
-
-/* ========================================
-   9. Search Input Events
-======================================== */
-
-searchInput.addEventListener("input", updateResults);
-
-
-/* ========================================
-   10. Clear Search
-======================================== */
-
-clearSearchButton.addEventListener("click", () => {
-
-    searchInput.value = "";
-
-    updateResults();
-
-    searchInput.focus();
-});
-
-
-/* ========================================
-   11. Reset All Filters
-======================================== */
+if (clearSearchButton) {
+    clearSearchButton.addEventListener("click", () => {
+        searchInput.value = "";
+        updateResults();
+        searchInput.focus();
+    });
+}
 
 function resetFilters() {
-
     searchInput.value = "";
-
     selectedCategory = "all";
     selectedStatus = "all";
-
-    // เลือกหมวดหมู่ทั้งหมด
-    categoryFilters
-        .querySelectorAll("[data-category]")
-        .forEach((button) => {
-            button.classList.toggle(
-                "active",
-                button.dataset.category === "all"
-            );
-        });
-
-    // เลือกสถานะทั้งหมด
-    statusFilters
-        .querySelectorAll("[data-status]")
-        .forEach((button) => {
-            button.classList.toggle(
-                "active",
-                button.dataset.status === "all"
-            );
-        });
-
+    categoryFilters.querySelectorAll("[data-category]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.category === "all");
+    });
+    statusFilters.querySelectorAll("[data-status]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.status === "all");
+    });
     updateResults();
 }
 
-resetFiltersButton.addEventListener("click", resetFilters);
+if (resetFiltersButton) resetFiltersButton.addEventListener("click", resetFilters);
 
+if (homeSearch) {
+    homeSearch.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            searchInput.value = homeSearch.value;
+            window.showScreen?.("all");
+            updateResults();
+        }
+    });
+}
 
-/* ========================================
-   12. Initial Render
-======================================== */
-
-// แสดงร้านอาหารทั้งหมดเมื่อเปิดหน้าเว็บ
 updateResults();
+renderRecommended();
+loadStatuses();
